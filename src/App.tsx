@@ -2,39 +2,102 @@ import React, { useEffect } from 'react';
 import './App.css';
 import WeatherSide from './components/WeatherSide';
 import DailyForest from './components/DailyForest';
-import { log } from 'console';
 import { forecastOfDay, setForecasts } from './redux/forecastReducer';
-import { useDispatch } from 'react-redux';
-
-
-function App() {
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    fetch('http://api.openweathermap.org/data/2.5/forecast/?q=%D0%B1%D0%BE%D1%80%D0%B8%D1%81%D0%BB%D0%B0%D0%B2&units=metric&cnt=7&appid=e556ce8f19a6ec25f11d34d85c33652d')
-    .then(data=> data.json()).then(data=> {
-      const {name} = data.city
-      const newArr:forecastOfDay[] = data.list.map((item:any) => {
-        return {
-          temp: item.main.temp,
-          dataTime: item.dt,
-          description: item.weather[0].description,
-          feelsLike: item.main.feels_like,
-          speedWind: item.wind.speed,
-          icon: item.weather[0].icon,
-        };
-      });  
-     dispatch(setForecasts(newArr))
-    })
-    
-  },[])
-  return (
-    <div>
-      <div className="container">
-        <WeatherSide/>
-        <DailyForest/>
-      </div>
-    </div>
-  );
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from './redux/store';
+type averageValueByDateType = {
+  description: string[]
+  icon: string[]
+  temp: number
+  feelsLike: number
+  speedWind: number
+  count:number
 }
+type averageValuesByDateType = {
+  [key: string]: averageValueByDateType
+}
+type dataType = {
+  city: {name:string}
+  cod: string
+  messages: number
+  cnt: number
+  list: Item[]
+}
+type Item = {
+  dt_txt: string
+  main: {
+    temp: number
+    feels_like: number
+  };
+  weather: {
+    main: string
+    icon: string
+  }[]
+  wind: {
+    speed: number
+  }
+};
+function App() {
+  const {forecasts, city} = useSelector((state:RootState)=>state.forecasts)
+  const dispatch = useDispatch()
+  useEffect(() => {
+    fetch('https://api.openweathermap.org/data/2.5/forecast?q=Борислав&appid=e556ce8f19a6ec25f11d34d85c33652d&units=metric')
+      .then(data => data.json()).then((data:dataType) => {
+        const city:string = data.city.name
+        const averageValuesByDate:averageValuesByDateType = {}
+        for (let i = 0; i < data.list.length; i++) {
+          const item = data.list[i];
+          const dataTime = item.dt_txt.split(" ")[0];
+              if (averageValuesByDate[dataTime] === undefined) {
+                averageValuesByDate[dataTime] = {
+                  temp: item.main.temp,
+                  description: [item.weather[0].main],
+                  feelsLike: item.main.feels_like,
+                  speedWind: item.wind.speed,
+                  icon: [item.weather[0].icon],
+                  count: 1
+                };
+                              
+              } else {
+                averageValuesByDate[dataTime].temp += item.main.temp;
+                averageValuesByDate[dataTime].description.push(item.weather[0].main)
+                averageValuesByDate[dataTime].feelsLike += item.main.feels_like;
+                averageValuesByDate[dataTime].speedWind += item.wind.speed;
+                averageValuesByDate[dataTime].icon.push(item.weather[0].icon)
+                averageValuesByDate[dataTime].count += 1;
+              }
+
+              
+            }
+
+            const forecasts:forecastOfDay[] = [];
+
+            for (const date in averageValuesByDate) {
+              const averageTemp = averageValuesByDate[date].temp / averageValuesByDate[date].count;
+              const averageFeelsLike = averageValuesByDate[date].feelsLike / averageValuesByDate[date].count;
+              const averagespeedWind = averageValuesByDate[date].speedWind / averageValuesByDate[date].count;
+              const icon = averageValuesByDate[date].icon[Math.floor((averageValuesByDate[date].icon.length)/2)]
+              const description =  averageValuesByDate[date].description[(averageValuesByDate[date].description.length)/2]
+              forecasts.push({ 
+                dataTime: date,
+                temp: Number(averageTemp.toFixed(2)),
+                feelsLike: averageFeelsLike,
+                speedWind: averagespeedWind,
+                icon,
+                description
+               });              
+            }
+            dispatch(setForecasts({city,forecasts}))
+          })
+        }, [dispatch])
+    return (
+      <div>
+        <div className="container">
+          {forecasts.length > 0 &&<WeatherSide {...{forecasts, city}} />}
+          {forecasts.length > 0 &&<DailyForest speedWind={forecasts[0].speedWind} feelsLike={forecasts[0].feelsLike}/>}
+        </div>
+      </div>
+    );
+  }
 
 export default App;

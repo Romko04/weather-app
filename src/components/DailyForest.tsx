@@ -1,6 +1,11 @@
 import React from 'react';
 import Week from './week/Week';
-const DailyForest:React.FC = ()=>{
+import { forecastOfDay } from '../redux/forecastReducer';
+type WeatherSide = {
+  speedWind:number
+  feelsLike:number
+}
+const DailyForest:React.FC<WeatherSide> = ({speedWind,feelsLike})=>{
     return (
         <div className="info-side">
           <div className="today-info-container">
@@ -8,10 +13,10 @@ const DailyForest:React.FC = ()=>{
               <div className="precipitation"> <span className="title">PRECIPITATION</span><span className="value">0 %</span>
                 <div className="clear"></div>
               </div>
-              <div className="humidity"> <span className="title">HUMIDITY</span><span className="value">34 %</span>
+              <div className="humidity"> <span className="title">Feels Like</span><span className="value">{Math.floor(feelsLike)}</span>
                 <div className="clear"></div>
               </div>
-              <div className="wind"> <span className="title">WIND</span><span className="value">0 km/h</span>
+              <div className="wind"> <span className="title">WIND</span><span className="value">{Math.floor(speedWind)}km/h</span>
                 <div className="clear"></div>
               </div>
             </div>
