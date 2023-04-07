@@ -3,6 +3,7 @@ import Week from './week/Week';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { forecastOfDay } from '../types/types';
+import CityForm from './CityForm/CityForm';
 const DailyForest: React.FC<forecastOfDay[]> = (forecasts) => {
   const activeIndex = useSelector((state: RootState) => state.forecasts.activeIndexForecast)
   const {feelsLike, speedWind} = forecasts[activeIndex]
@@ -19,9 +20,7 @@ const DailyForest: React.FC<forecastOfDay[]> = (forecasts) => {
         </div>
       </div>
       <Week />
-      <div className="location-container">
-        <button className="location-button"> <i data-feather="map-pin"></i><span>Change location</span></button>
-      </div>
+      <CityForm/>
     </div>
   )
 }

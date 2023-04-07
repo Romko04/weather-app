@@ -209,7 +209,7 @@ body {
 
 .location-button {
 	outline: none;
-	width: 100%;
+	width: 50%;
 	-webkit-box-sizing: border-box;
 	        box-sizing: border-box;
 	border: none;
@@ -246,3 +246,25 @@ body {
 	align-items: center;
 	justify-content: center;
 }
+.location-container{
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	align-items: center;
+}
+.search-input {
+	outline: none;
+	width: 50%;
+	box-sizing: border-box;
+	border: none;
+	border-radius: 25px;
+	padding: 10px;
+	font-family: 'Montserrat', sans-serif;
+	color: #000;
+	font-weight: 700;
+	box-shadow: 0 0 30px -5px rgba(0, 0, 0, 0.25);
+  }
+  .search-input:focus {
+	/* outline: 2px solid #00a0e3; змінити на бажаний колір */
+	box-shadow: 0 0 8px rgba(219, 219, 219, 0.8); /* змінити на бажану тінь */
+  }
