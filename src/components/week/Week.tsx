@@ -3,6 +3,7 @@ import DayWeek from './DayWeek';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 const Week:React.FC = ()=>{
+    debugger
     const {forecasts} = useSelector((state:RootState)=>state.forecasts)
     return (
         <div className="week-container">

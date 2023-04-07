@@ -10,7 +10,7 @@ export type forecastOfDay = {
 }
 interface SetForecastsPayload {
   city: string;
-  forecasts: Array<forecastOfDay>;
+  forecastsList: Array<forecastOfDay>;
 }
 export interface forecastsState {
   city: string
@@ -28,7 +28,7 @@ export const forecastsSlice = createSlice({
   initialState,
   reducers: {
     setForecasts: (state, action: PayloadAction<SetForecastsPayload>) => {
-      state.forecasts = action.payload.forecasts
+      state.forecasts = action.payload.forecastsList
       state.city = action.payload.city
     },
     setActiveIndexForecast: (state, action: PayloadAction<number>) => {

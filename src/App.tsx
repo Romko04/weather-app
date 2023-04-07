@@ -37,11 +37,11 @@ type Item = {
     speed: number
   }
 };
-function App() {
+const App:React.FC =()=> {
   const {forecasts, city} = useSelector((state:RootState)=>state.forecasts)
   const dispatch = useDispatch()
   useEffect(() => {
-    fetch('https://api.openweathermap.org/data/2.5/forecast?q=Борислав&appid=e556ce8f19a6ec25f11d34d85c33652d&units=metric')
+    fetch('https://api.openweathermap.org/data/2.5/forecast?q=Івано-Франківськ&appid=e556ce8f19a6ec25f11d34d85c33652d&units=metric')
       .then(data => data.json()).then((data:dataType) => {
         const city:string = data.city.name
         const averageValuesByDate:averageValuesByDateType = {}
@@ -70,7 +70,7 @@ function App() {
               
             }
 
-            const forecastsData:forecastOfDay[] = [];
+            const forecastsList:forecastOfDay[] = [];
 
             for (const date in averageValuesByDate) {
               const averageTemp = averageValuesByDate[date].temp / averageValuesByDate[date].count;
@@ -78,7 +78,7 @@ function App() {
               const averagespeedWind = averageValuesByDate[date].speedWind / averageValuesByDate[date].count;
               const icon = averageValuesByDate[date].icon[Math.floor((averageValuesByDate[date].icon.length)/2)]
               const description =  averageValuesByDate[date].description[(averageValuesByDate[date].description.length)/2]
-              forecastsData.push({ 
+              forecastsList.push({ 
                 dataTime: date,
                 temp: Number(averageTemp.toFixed(2)),
                 feelsLike: averageFeelsLike,
@@ -87,7 +87,7 @@ function App() {
                 description
                });              
             }
-            dispatch(setForecasts({city,forecasts}))
+            dispatch(setForecasts({city,forecastsList}))
           })
         }, [dispatch])
     return (
