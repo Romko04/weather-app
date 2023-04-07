@@ -1,7 +1,8 @@
 import React from 'react';
-import { forecastOfDay, setActiveIndexForecast } from '../../redux/forecastReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { forecastOfDay } from '../../types/types';
+import { setActiveIndexForecast } from '../../redux/forecastReducer';
 const DayWeek: React.FC<forecastOfDay & { count: number }> = ({ temp, dataTime, icon, count }) => {
     const dispatch = useDispatch()
     const onChangeDayForecast = (index:number) => {

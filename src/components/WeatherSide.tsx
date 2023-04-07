@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { forecastOfDay } from '../redux/forecastReducer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-type WeatherSideType = {
-    forecasts:forecastOfDay[]
-    city: string
-}
+import { WeatherSideType } from '../types/types';
 const WeatherSide: React.FC<WeatherSideType> = ({forecasts, city}) => {
-    debugger
     const activeIndex = useSelector((state: RootState) => state.forecasts.activeIndexForecast)
     let [{temp, dataTime, description}, setForecast] = useState(forecasts[activeIndex])
     useEffect(()=>{

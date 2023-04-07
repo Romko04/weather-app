@@ -1,8 +1,8 @@
 import React from 'react';
 import Week from './week/Week';
-import { forecastOfDay } from '../redux/forecastReducer';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { forecastOfDay } from '../types/types';
 const DailyForest: React.FC<forecastOfDay[]> = (forecasts) => {
   const activeIndex = useSelector((state: RootState) => state.forecasts.activeIndexForecast)
   const {feelsLike, speedWind} = forecasts[activeIndex]
