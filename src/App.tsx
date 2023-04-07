@@ -70,7 +70,7 @@ function App() {
               
             }
 
-            const forecasts:forecastOfDay[] = [];
+            const forecastsData:forecastOfDay[] = [];
 
             for (const date in averageValuesByDate) {
               const averageTemp = averageValuesByDate[date].temp / averageValuesByDate[date].count;
@@ -78,7 +78,7 @@ function App() {
               const averagespeedWind = averageValuesByDate[date].speedWind / averageValuesByDate[date].count;
               const icon = averageValuesByDate[date].icon[Math.floor((averageValuesByDate[date].icon.length)/2)]
               const description =  averageValuesByDate[date].description[(averageValuesByDate[date].description.length)/2]
-              forecasts.push({ 
+              forecastsData.push({ 
                 dataTime: date,
                 temp: Number(averageTemp.toFixed(2)),
                 feelsLike: averageFeelsLike,
@@ -94,7 +94,7 @@ function App() {
       <div>
         <div className="container">
           {forecasts.length > 0 &&<WeatherSide {...{forecasts, city}} />}
-          {forecasts.length > 0 &&<DailyForest speedWind={forecasts[0].speedWind} feelsLike={forecasts[0].feelsLike}/>}
+          {forecasts.length > 0 &&<DailyForest {...forecasts}/>}
         </div>
       </div>
     );

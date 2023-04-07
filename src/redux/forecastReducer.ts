@@ -15,24 +15,29 @@ interface SetForecastsPayload {
 export interface forecastsState {
   city: string
   forecasts: forecastOfDay[]
+  activeIndexForecast: number
 }
 const initialState: forecastsState = {
   city: '',
-  forecasts: []
+  forecasts: [],
+  activeIndexForecast: 0,
 }
 
 export const forecastsSlice = createSlice({
-  name: 'counter',
+  name: 'forecast',
   initialState,
   reducers: {
     setForecasts: (state, action: PayloadAction<SetForecastsPayload>) => {
       state.forecasts = action.payload.forecasts
       state.city = action.payload.city
-    }
+    },
+    setActiveIndexForecast: (state, action: PayloadAction<number>) => {
+      state.activeIndexForecast = action.payload
+    },
   },
 })
 
-export const { setForecasts } = forecastsSlice.actions
+export const { setForecasts, setActiveIndexForecast } = forecastsSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 // export const selectCount = (state: RootState) => state.counter.value

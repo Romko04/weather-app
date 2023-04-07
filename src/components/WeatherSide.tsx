@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { forecastOfDay } from '../redux/forecastReducer';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../redux/store';
 type WeatherSide = {
@@ -7,7 +9,12 @@ type WeatherSide = {
     city: string
 }
 const WeatherSide: React.FC<WeatherSide> = ({forecasts, city}) => {
-    let [{temp, dataTime, description}, setForecast] = useState(forecasts[0])
+    const activeIndex = useSelector((state: RootState) => state.forecasts.activeIndexForecast)
+    let [{temp, dataTime, description}, setForecast] = useState(forecasts[activeIndex])
+    useEffect(()=>{
+        debugger
+        setForecast(forecasts[activeIndex])
+    },[activeIndex])
     let date = new Date(dataTime)
     const dateDay = new Intl.DateTimeFormat('EN', { weekday: 'long', day: 'numeric', month: 'long', year: '2-digit' }).format(date);
     return (

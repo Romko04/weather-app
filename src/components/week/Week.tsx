@@ -8,7 +8,7 @@ const Week:React.FC = ()=>{
         <div className="week-container">
         <ul className="week-list">
             {/* {[...Array(7)].map((_,i:number)=> <DayWeek key={i}/>)} */}
-            {forecasts?.map((item,i:number)=> <DayWeek {...item}  key={i}/>)}
+            {forecasts?.map((item,i:number)=> <DayWeek  {...item} count={i}  key={i}/>)}
             <div className="clear"></div>
         </ul>
     </div>
