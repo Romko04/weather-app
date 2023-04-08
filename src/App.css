@@ -240,12 +240,18 @@ body {
 	width: auto;
 	margin-right: 5px;
 }
+.week-list{
+	display: flex;
+	gap: 10px;
+}
 .week-list li{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	border: 1px solid #3e2c2c;
 	justify-content: center;
 }
+
 .location-container{
 	display: flex;
 	gap: 20px;
