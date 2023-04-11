@@ -5,7 +5,6 @@ import axios from 'axios'
 export const fetchForecastsList = createAsyncThunk(
   'forecastsSlice/fetchForecastsList',
   async (city: string) => {
-    debugger
     let res = await axios.get<ResponseDataType>(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=e556ce8f19a6ec25f11d34d85c33652d&units=metric`)
     const averageValuesByDate: averageValuesByDateType = {}
     for (let i = 0; i < res.data.list.length; i++) {
@@ -54,7 +53,7 @@ export const fetchForecastsList = createAsyncThunk(
   }
 )
 const initialState: forecastsState = {
-  city: '',
+  city: 'Борислав',
   forecasts: [],
   activeIndexForecast: 0,
 }
@@ -65,6 +64,10 @@ export const forecastsSlice = createSlice({
     setActiveIndexForecast: (state, action: PayloadAction<number>) => {
       state.activeIndexForecast = action.payload
     },
+    setCity: (state, action: PayloadAction<string>) => {
+      state.city = action.payload
+      state.forecasts = []
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(
@@ -74,9 +77,7 @@ export const forecastsSlice = createSlice({
       })
     builder.addCase(
       fetchForecastsList.fulfilled, (state, action) => {
-        debugger
         state.forecasts = action.payload.forecastsList
-        state.city = action.payload.city
         // state.status = "success"
         // state.loading = false
       })
@@ -90,5 +91,5 @@ export const forecastsSlice = createSlice({
   }
 })
 
-export const { setActiveIndexForecast } = forecastsSlice.actions
+export const { setActiveIndexForecast,setCity } = forecastsSlice.actions
 export default forecastsSlice.reducer

@@ -79,7 +79,9 @@ body {
 	top: 25px;
 	left: 25px;
 }
-
+.search-input{
+	width: 100%;
+}
 .date-dayname {
 	margin: 0;
 }
@@ -99,7 +101,17 @@ body {
 	width: auto;
 	margin-right: 5px;
 }
-
+.location__serch{
+	position: relative;
+	width: 50%;
+}
+.location__serch::after{
+	content: url('./assets/img/search.svg');
+	height: 16px;
+	position: absolute;
+	left: 10px;
+	top: 6px;
+}
 .weather-container {
 	position: absolute;
 	bottom: 25px;
@@ -260,11 +272,12 @@ body {
 }
 .search-input {
 	outline: none;
-	width: 50%;
+	width: 100%;
 	box-sizing: border-box;
 	border: none;
 	border-radius: 25px;
 	padding: 10px;
+	padding-left: 40px;
 	font-family: 'Montserrat', sans-serif;
 	color: #000;
 	font-weight: 700;
