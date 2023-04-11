@@ -287,3 +287,47 @@ body {
 	/* outline: 2px solid #00a0e3; змінити на бажаний колір */
 	box-shadow: 0 0 8px rgba(219, 219, 219, 0.8); /* змінити на бажану тінь */
   }
+@media (max-width: 1129px) {
+	body{
+		height: auto;
+	}
+.container{
+	height: auto;
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 50px;
+}
+.info-side {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+}
+.week-list {
+    flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.weather-side {
+	margin: 50px auto;
+    position: relative;
+	width: auto;
+    height: 369px;
+	float: none;
+	background-image: none;
+}
+.weather-side:hover {
+    transform: none;
+}
+.content-loader{
+	width: 10px;
+}
+.mobile-container{
+	width: 300px;
+    height: 400px;;
+    margin: 0 auto;
+    position: relative;
+}
+.info-side {
+    padding-top: 60px;
+}
+}

@@ -2,9 +2,9 @@ import React from 'react';
 import Week from '../week/Week';
 import { forecastOfDay } from '../../types/types';
 import CityForm from '../CityForm/CityForm';
-import TodayInfo from './TodayInfo';
+import TodayInfo from './TodayInfo/TodayInfo';
 type DailyForecastProps = {forecasts: forecastOfDay[]}
-const DailyForecast: React.FC<DailyForecastProps> = (forecasts) => {
+const DailyForecast: React.FC<DailyForecastProps> = () => {
   return (
     <div className="info-side">
       <div className="today-info-container">

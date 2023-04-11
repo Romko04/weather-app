@@ -39,7 +39,7 @@ export const fetchForecastsList = createAsyncThunk(
       const averageFeelsLike = averageValuesByDate[date].feelsLike / averageValuesByDate[date].count;
       const averagespeedWind = averageValuesByDate[date].speedWind / averageValuesByDate[date].count;
       const icon = averageValuesByDate[date].icon[Math.floor((averageValuesByDate[date].icon.length) / 2)]
-      const description = averageValuesByDate[date].description[(averageValuesByDate[date].description.length) / 2]
+      const description = averageValuesByDate[date].description[Math.floor((averageValuesByDate[date].description.length) / 2)]
       forecastsList.push({
         dataTime: date,
         temp: Number(averageTemp.toFixed(2)),
@@ -53,7 +53,7 @@ export const fetchForecastsList = createAsyncThunk(
   }
 )
 const initialState: forecastsState = {
-  city: 'Борислав',
+  city: 'Київ',
   forecasts: [],
   activeIndexForecast: 0,
 }
@@ -71,22 +71,17 @@ export const forecastsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(
-      fetchForecastsList.pending, (state, action) => {
-        // state.forecasts = []
-        // state.loading = true
+      fetchForecastsList.pending, (state) => {
+        state.forecasts = []
       })
     builder.addCase(
       fetchForecastsList.fulfilled, (state, action) => {
         state.forecasts = action.payload.forecastsList
-        // state.status = "success"
-        // state.loading = false
       })
     builder.addCase(
-      fetchForecastsList.rejected, (state, action) => {
-        console.log('Errror');
-        // state.status = "error"
+      fetchForecastsList.rejected, (state) => {
+        alert(`Щось пішло не так, можливо погоди по такій локації на сайті немає.`)
         state.forecasts = []
-        // state.loading = false
       })
   }
 })
