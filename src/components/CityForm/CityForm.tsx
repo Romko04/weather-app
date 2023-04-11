@@ -10,6 +10,7 @@ const CityForm: React.FC = () => {
     const onSybmitSearchValue = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         dispatch(setCity(searchValue))
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         changeSearchValue('')
     }
     return (

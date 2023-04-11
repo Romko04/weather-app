@@ -7,6 +7,7 @@ const DayWeek: React.FC<forecastOfDay & { count: number }> = ({ temp, dataTime, 
     const dispatch = useDispatch()
     const onChangeDayForecast = (index:number) => {
         dispatch(setActiveIndexForecast(index))
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     const activeIndex = useSelector((state: RootState) => state.forecasts.activeIndexForecast)
     let date = new Date(dataTime)
